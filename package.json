@@ -20,5 +20,14 @@
   "bugs": {
     "url": "https://github.com/oknoorap/jssr/issues"
   },
-  "homepage": "https://github.com/oknoorap/jssr#readme"
+  "homepage": "https://github.com/oknoorap/jssr#readme",
+  "xo": {
+    "esnext": true,
+    "space": true,
+    "semicolon": false
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "xo": "^0.18.1"
+  }
 }
