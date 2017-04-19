@@ -1,5 +1,4 @@
 import test from 'ava'
-import deepEqual from 'deep-equal'
 import jssr from './index'
 
 const str = 'hello world'
@@ -20,6 +19,16 @@ const obj = {
     str: 'universe',
     good: true
   }),
+  normalObject: {
+    good: true
+  }
+}
+const parsedObject = {
+  greetings: 'hello',
+  customObject: {
+    str: 'universe',
+    good: true
+  },
   normalObject: {
     good: true
   }
@@ -55,7 +64,7 @@ test('array should be serialized', t => {
 })
 
 test('serialized array should be array', t => {
-  t.is(jssr.parse(arrSerialized), array)
+  t.deepEqual(jssr.parse(arrSerialized), array)
 })
 
 test('object should be serialized', t => {
@@ -64,5 +73,5 @@ test('object should be serialized', t => {
 })
 
 test('serialized object should be object', t => {
-  t.true(deepEqual(jssr.parse(objSerialized, obj)))
+  t.deepEqual(jssr.parse(objSerialized), parsedObject)
 })

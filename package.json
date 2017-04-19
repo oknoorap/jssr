@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "ava": "^0.19.1",
-    "deep-equal": "^1.0.1",
     "xo": "^0.18.1"
   }
 }
