@@ -1,0 +1,33 @@
+{
+  "name": "jssr",
+  "version": "1.0.0",
+  "description": "PHP Serialization in Javascript",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo && ava --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oknoorap/jssr.git"
+  },
+  "keywords": [
+    "php",
+    "php-serialize",
+    "json"
+  ],
+  "author": "Ribhararnus Pracutian <oknoorap@gmail.com> (https://www.oknoorap.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oknoorap/jssr/issues"
+  },
+  "homepage": "https://github.com/oknoorap/jssr#readme",
+  "xo": {
+    "esnext": true,
+    "space": true,
+    "semicolon": false
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "xo": "^0.18.1"
+  }
+}
