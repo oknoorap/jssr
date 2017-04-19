@@ -98,5 +98,57 @@ const stringify = (value, options) => {
   return retval
 }
 
-module.exports.stringify = stringify
-module.exports.objType = objType
+const arrRegx = /i\:[\d]+;/g
+const parse = str => {
+  const strArr = str.split(':')
+  let value
+
+  // Get first type
+  if (strArr.length > 0) {
+    const type = strArr[0]
+    strArr.splice(0, 1)
+
+    const length = Number(strArr[0])
+    switch (type) {
+      case varType.STRING:
+        if (!isNaN(length) && length > -1) {
+          strArr.splice(0, 1)
+          value = strArr.join(':')
+          value = value.substr(1, value.length - 3)
+        }
+        break
+      case varType.INTEGER:
+        const int = Number(strArr[0].substr(0, strArr[0].length - 1))
+        if (!isNaN(int)) {
+          value = int
+        }
+        break
+      case varType.BOOLEAN:
+        value = Boolean(Number(strArr[0].substr(0, strArr[0].length - 1)))
+        break
+      case varType.ARRAY:
+        if (length > -1) {
+          strArr.splice(0, 1)
+          let arr = strArr.join(':')
+          arr = arr.substr(1, arr.length - 3)
+          value = arr.split(arrRegx)
+        }
+        break
+      case varType.OBJECT:
+        break
+      default:
+        value = null
+        break
+    }
+
+    return value
+  } else {
+    throw new Error('Invalid serialized store.')
+  }
+}
+
+module.exports = {
+  objType,
+  stringify,
+  parse
+}
