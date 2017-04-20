@@ -9,9 +9,9 @@ const varType = {
 }
 
 /**
- * Template definition for replacer
- * t: type, l: length, v: value, ks: key length / size, n: key name
- */
+* Template definition for replacer
+* t: type, l: length, v: value, ks: key length / size, n: key name
+*/
 const template = {
   [varType.STRING]: 't:l:"v";',
   [varType.INTEGER]: 't:v;',
@@ -39,6 +39,16 @@ const objType = (objClass, obj) => {
 const stringify = (value, options) => {
   let type = (typeof value).charAt(0)
   let length = value.length
+  let objectName = ''
+
+  if (type === varType.STRING) {
+    const json = isJSON(value)
+    if (json && json.class) {
+      objectName = json.class
+      type = varType.OBJECT
+      value = json.obj
+    }
+  }
 
   const firstStr = (value).toString().charAt(0)
   if (!isNaN(value) && firstStr !== 't' && firstStr !== 'f') {
@@ -49,22 +59,13 @@ const stringify = (value, options) => {
     value = Number(value)
   }
 
-  const objectName = (options && 'obj' in options) ? options.obj : ''
   let keySize
   if (value instanceof Object && !Array.isArray(value)) {
     const objectKeys = Object.keys(value)
     const objectValues = []
 
     objectKeys.forEach(key => {
-      let objValue = stringify(value[key], options)
-      const json = isJSON(value[key])
-
-      if (json && json.class) {
-        const newOptions = Object.assign(options || {}, {obj: json.class})
-        objValue = stringify(json.obj, newOptions)
-      }
-
-      objectValues.push([stringify(key, options), objValue].join(''))
+      objectValues.push([stringify(key, options), stringify(value[key], options)].join(''))
     })
 
     value = objectValues.join('')
